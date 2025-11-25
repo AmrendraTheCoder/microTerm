@@ -291,7 +291,6 @@ export default function Home() {
               </a>
             )}
           </section>
-        )}
 
         {/* For you section - Horizontal scroll */}
         {activeCategory === 'all' && (
@@ -354,17 +353,15 @@ export default function Home() {
               )}
             </div>
           </section>
-        )}
 
-        {/* Category-specific content */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
-        {/* Left Column (Feeds) - Span 7 */}
-        <div className="lg:col-span-7 space-y-10">
-          <TokenGateBanner />
+          {/* Home Page Grid Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+            {/* Left Column (Feeds) - Span 7 */}
+            <div className="lg:col-span-7 space-y-10">
+              <TokenGateBanner />
 
-          {/* SEC Filings - Show for 'all' and 'deals' */}
-          {(activeCategory === 'all' || activeCategory === 'deals') && (
-          <section>
+              {/* SEC Filings */}
+              <section>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-semibold text-white flex items-center gap-2">
                 <span className="p-1.5 rounded bg-blue-500/10 text-blue-400">
@@ -463,12 +460,10 @@ export default function Home() {
                     />
                   ))}
             </div>
-          </section>
-          )}
+              </section>
 
-          {/* Whale Alerts - Show for 'all' and 'defi' */}
-          {(activeCategory === 'all' || activeCategory === 'defi') && (
-          <section>
+              {/* Whale Alerts */}
+              <section>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-semibold text-white flex items-center gap-2">
                 <span className="p-1.5 rounded bg-violet-500/10 text-violet-400">
@@ -548,15 +543,13 @@ export default function Home() {
                     />
                   ))}
             </div>
-          </section>
-          )}
-        </div>
+              </section>
+            </div>
 
-        {/* Right Column (News & Agent) - Span 5 */}
-        <div className="lg:col-span-5 space-y-8">
-          {/* Agent Card - Always show */}
-          {activeCategory === 'all' && (
-          <div className="web3-card p-6 relative overflow-hidden group">
+            {/* Right Column (News & Agent) - Span 5 */}
+            <div className="lg:col-span-5 space-y-8">
+              {/* Agent Card */}
+              <div className="web3-card p-6 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/20 transition-all duration-500" />
 
             <div className="relative z-10">
@@ -595,12 +588,10 @@ export default function Home() {
                 </button>
               </div>
             </div>
-          </div>
-          )}
+              </div>
 
-          {/* News Feed - Show for 'all', 'markets', 'regulation' */}
-          {(activeCategory === 'all' || activeCategory === 'markets' || activeCategory === 'regulation') && (
-          <section>
+              {/* News Feed */}
+              <section>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-semibold text-white flex items-center gap-2">
                 <span className="p-1.5 rounded bg-green-500/10 text-green-400">
@@ -678,17 +669,251 @@ export default function Home() {
                     />
                   ))}
             </div>
-          </section>
-          )}
+              </section>
 
-          {/* NFT Gallery - Always show */}
-          {activeCategory === 'all' && (
-          <section>
-            <NFTGallery />
-          </section>
-          )}
+              {/* NFT Gallery */}
+              <section>
+                <NFTGallery />
+              </section>
+            </div>
+          </div>
         </div>
-      </div>
+        )}
+
+        {/* DEAL FLOW VIEW - Only SEC Filings/Deals */}
+        {activeCategory === 'deals' && (
+          <div className="space-y-6">
+            <div className="flex items-start justify-between gap-4 mb-8">
+              <div className="space-y-1">
+                <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Private Deal Flow</h2>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed">
+                  Exclusive access to SEC filings and private investment opportunities
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {dealsLoading
+                ? Array(5)
+                    .fill(0)
+                    .map((_, i) => (
+                      <div key={i} className="web3-card p-6 space-y-3">
+                        <Skeleton className="h-6 w-2/3 bg-white/5" />
+                        <Skeleton className="h-4 w-1/3 bg-white/5" />
+                        <Skeleton className="h-20 w-full bg-white/5" />
+                      </div>
+                    ))
+                : deals?.map((deal) => (
+                    <BlurredCard
+                      key={deal.id}
+                      id={deal.id.toString()}
+                      title={deal.company_name}
+                      description={`${deal.sector} • Filed ${new Date(
+                        deal.filed_at
+                      ).toLocaleDateString()}`}
+                      type="deal"
+                      cost={0.5}
+                      preview={
+                        <div className="grid grid-cols-3 gap-4 py-2 opacity-50">
+                          <div className="space-y-1">
+                            <div className="text-xs text-slate-500">Amount</div>
+                            <div className="h-4 w-16 bg-slate-700/50 rounded animate-pulse" />
+                          </div>
+                          <div className="space-y-1">
+                            <div className="text-xs text-slate-500">Valuation</div>
+                            <div className="h-4 w-16 bg-slate-700/50 rounded animate-pulse" />
+                          </div>
+                          <div className="space-y-1">
+                            <div className="text-xs text-slate-500">Stage</div>
+                            <div className="h-4 w-16 bg-slate-700/50 rounded animate-pulse" />
+                          </div>
+                        </div>
+                      }
+                      content={
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-3 gap-4 py-2">
+                            <div className="space-y-1">
+                              <div className="text-xs text-slate-500">Amount</div>
+                              <div className="text-sm font-semibold text-white">
+                                ${(deal.amount / 1000000).toFixed(1)}M
+                              </div>
+                            </div>
+                            <div className="space-y-1">
+                              <div className="text-xs text-slate-500">Valuation</div>
+                              <div className="text-sm font-semibold text-white">
+                                ${(deal.valuation / 1000000).toFixed(1)}M
+                              </div>
+                            </div>
+                            <div className="space-y-1">
+                              <div className="text-xs text-slate-500">Stage</div>
+                              <div className="text-sm font-semibold text-white">
+                                {deal.stage}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="pt-3 border-t border-white/10">
+                            <p className="text-sm text-slate-300 leading-relaxed">
+                              {deal.description}
+                            </p>
+                          </div>
+                        </div>
+                      }
+                    />
+                  ))}
+            </div>
+          </div>
+        )}
+
+        {/* DEFI VIEW - Only Whale Alerts */}
+        {activeCategory === 'defi' && (
+          <div className="space-y-6">
+            <div className="flex items-start justify-between gap-4 mb-8">
+              <div className="space-y-1">
+                <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Whale Activity</h2>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed">
+                  Track large on-chain movements and copy trade opportunities
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {alertsLoading
+                ? Array(5)
+                    .fill(0)
+                    .map((_, i) => (
+                      <div key={i} className="web3-card p-6 space-y-3">
+                        <Skeleton className="h-6 w-2/3 bg-white/5" />
+                        <Skeleton className="h-4 w-1/2 bg-white/5" />
+                        <Skeleton className="h-16 w-full bg-white/5" />
+                      </div>
+                    ))
+                : alerts?.map((alert) => (
+                    <div key={alert.id} className="web3-card p-6 space-y-4">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 space-y-2">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                alert.transaction_type === "buy"
+                                  ? "bg-green-500/10 text-green-400"
+                                  : "bg-red-500/10 text-red-400"
+                              }`}
+                            >
+                              {alert.transaction_type.toUpperCase()}
+                            </span>
+                            <span className="text-sm font-semibold text-white">
+                              ${(alert.amount_usd / 1000000).toFixed(2)}M
+                            </span>
+                          </div>
+                          <h3 className="text-lg font-bold text-white">
+                            {alert.token_symbol}
+                          </h3>
+                          <p className="text-sm text-slate-400">
+                            {alert.description}
+                          </p>
+                          <div className="flex items-center gap-4 text-xs text-slate-500">
+                            <span>{alert.blockchain}</span>
+                            <span>•</span>
+                            <span>
+                              {new Date(alert.detected_at).toLocaleString()}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      {alert.is_tradeable && alert.token_address && (
+                        <QuickSwapButton
+                          tokenAddress={alert.token_address}
+                          tokenSymbol={alert.token_symbol}
+                          onClick={() => handleCopyTrade(alert)}
+                        />
+                      )}
+                    </div>
+                  ))}
+            </div>
+          </div>
+        )}
+
+        {/* MARKETS VIEW - Only Market News */}
+        {(activeCategory === 'markets' || activeCategory === 'regulation') && (
+          <div className="space-y-6">
+            <div className="flex items-start justify-between gap-4 mb-8">
+              <div className="space-y-1">
+                <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+                  {activeCategory === 'markets' ? 'Market Intelligence' : 'Regulation News'}
+                </h2>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed">
+                  {activeCategory === 'markets' 
+                    ? 'Latest market trends, analysis, and trading insights'
+                    : 'Regulatory updates and compliance news'}
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {newsLoading
+                ? Array(6)
+                    .fill(0)
+                    .map((_, i) => (
+                      <div key={i} className="web3-card p-6 space-y-4">
+                        <Skeleton className="h-5 w-32 bg-white/5" />
+                        <Skeleton className="h-6 w-full bg-white/5" />
+                        <Skeleton className="h-4 w-3/4 bg-white/5" />
+                      </div>
+                    ))
+                : newsItems.map((item) => (
+                    <a
+                      key={item.id}
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group web3-card p-6 space-y-4 hover:border-blue-500/30 transition-all duration-200"
+                    >
+                      <div
+                        className="relative h-40 rounded-lg overflow-hidden flex items-center justify-center"
+                        style={{ background: getNewsImageGradient(item.title, item.sentiment) }}
+                      >
+                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
+                        <div className="relative z-10 text-white/90 text-center p-4">
+                          <Newspaper className="w-10 h-10 mx-auto mb-2 opacity-60" />
+                          <p className="text-xs font-medium opacity-75">{item.source}</p>
+                        </div>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 text-xs text-slate-500">
+                          <span className="font-medium">{item.source}</span>
+                          <span>•</span>
+                          <span>
+                            {new Date(item.published_at).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <h3 className="text-lg font-bold text-white group-hover:text-blue-100 leading-tight line-clamp-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-sm text-slate-400 line-clamp-3 leading-relaxed">
+                          {item.summary}
+                        </p>
+                        <div className="flex items-center justify-between pt-3 border-t border-white/5">
+                          <span
+                            className={`text-xs font-medium px-2.5 py-1 rounded-full ${
+                              item.sentiment === "Bullish"
+                                ? "bg-green-500/10 text-green-400"
+                                : item.sentiment === "Bearish"
+                                  ? "bg-red-500/10 text-red-400"
+                                  : "bg-slate-500/10 text-slate-400"
+                            }`}
+                          >
+                            {item.sentiment}
+                          </span>
+                          <span className="text-xs text-slate-500 group-hover:text-slate-300 transition-colors">
+                            Read more →
+                          </span>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* UI Components */}
