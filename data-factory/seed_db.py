@@ -4,18 +4,16 @@ import sqlite3
 from datetime import datetime, timedelta
 import random
 import os
-
-# Get the absolute path to the database
-DB_PATH = os.path.join(os.path.dirname(__file__), "database", "microterm.db")
+import config
 
 def seed_database():
-    print(f"Seeding database at: {DB_PATH}")
-    
     # Ensure database exists and tables are created
     from database.models import Database
     db = Database()
     
-    conn = sqlite3.connect(DB_PATH)
+    print(f"Seeding database at: {config.DATABASE_PATH}")
+    
+    conn = sqlite3.connect(config.DATABASE_PATH)
     cursor = conn.cursor()
     
     # Clear existing data

@@ -95,7 +95,7 @@ Similar transactions from ${data.sender_label} have historically been followed b
 - **Confidence**: ${getConfidenceLevel(data.amount)}
 
 **Trading Implications**:
-${getTrading Implications(data.sender_label, data.receiver_label)}
+${getTradingImplications(data.sender_label, data.receiver_label)}
 
 **Risk Assessment**:
 - Liquidity risk: ${getLiquidityRisk(data.amount)}
