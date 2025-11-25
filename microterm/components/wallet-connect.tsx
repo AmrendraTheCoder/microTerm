@@ -100,7 +100,7 @@ export function WalletConnect() {
       </ConnectWallet>
 
       {/* Enhanced Dropdown Menu */}
-      <WalletDropdown className="!bg-[#0A0A0F] !border !border-white/10 !rounded-2xl !shadow-2xl !shadow-black/50 !p-3 !mt-2 !min-w-[280px] !z-[100]">
+      <WalletDropdown className="!bg-[#0A0A0F] !border !border-white/10 !rounded-2xl !shadow-2xl !shadow-black/50 !p-3 !mt-2 !min-w-[280px] !z-50">
         {/* Account Info Section */}
         {isConnected && address && (
           <div className="px-3 py-3 mb-2 rounded-xl bg-gradient-to-br from-blue-600/10 to-violet-600/10 border border-white/5">

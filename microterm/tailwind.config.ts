@@ -47,7 +47,7 @@ const config: Config = {
         },
       },
       animation: {
-        scroll: 'scroll 20s linear infinite',
+        scroll: 'scroll 45s linear infinite',
       },
     },
   },
