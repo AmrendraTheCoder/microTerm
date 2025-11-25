@@ -42,11 +42,14 @@ export function TickerTape() {
     return () => clearInterval(interval);
   }, []);
 
+  // Create duplicated array for seamless scrolling, with unique keys
+  const duplicatedData = [...marketData, ...marketData];
+
   return (
     <div className="bg-zinc-900 border-b border-zinc-800 py-3 px-4 overflow-hidden">
       <div className="flex items-center gap-8 animate-scroll">
-        {marketData.map((data) => (
-          <div key={data.symbol} className="flex items-center gap-2 whitespace-nowrap">
+        {duplicatedData.map((data, index) => (
+          <div key={`${data.symbol}-${index}`} className="flex items-center gap-2 whitespace-nowrap">
             <span className="text-terminal-cyan font-bold">${data.symbol}:</span>
             <span className="text-terminal-fg">${data.price.toLocaleString()}</span>
             <span

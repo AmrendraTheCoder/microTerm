@@ -11,8 +11,8 @@ import {
 import type { LifecycleStatus } from '@coinbase/onchainkit/transaction';
 import { encodeFunctionData, parseUnits } from 'viem';
 import { useAccount } from 'wagmi';
+import { USDC_ADDRESS, EXPLORER_URL } from '@/lib/wagmi';
 
-const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'; // Base mainnet
 const ERC20_ABI = [
   {
     name: 'transfer',
@@ -124,7 +124,7 @@ export function PaymentModal({
             <div className="text-xs text-gray-400 break-all">
               <span>Transaction: </span>
               <a
-                href={`https://basescan.org/tx/${txHash}`}
+                href={`${EXPLORER_URL}/tx/${txHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-terminal-cyan hover:underline"
