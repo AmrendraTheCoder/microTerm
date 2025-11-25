@@ -15,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased min-h-screen relative bg-[#030305] text-white selection:bg-blue-500/30">
+      <body 
+        className="antialiased min-h-screen relative bg-[#030305] text-white selection:bg-blue-500/30"
+        suppressHydrationWarning
+      >
         <div className="relative z-10">
           <Providers>{children}</Providers>
         </div>
