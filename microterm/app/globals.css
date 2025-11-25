@@ -81,13 +81,3 @@
     text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
   }
 }
-
-/* Hide default OnchainKit wallet button - we use custom UI */
-[data-testid="ockConnectWallet_Container"] > button:not([class*="group"]) {
-  display: none !important;
-}
-
-/* Ensure only our custom button shows */
-[data-testid="ockConnectWallet_Container"] {
-  position: relative;
-}

@@ -5,6 +5,9 @@ import { BrainCircuit, Loader2 } from 'lucide-react';
 import { useSummary } from '@/lib/hooks/use-data';
 import { toast } from 'sonner';
 
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
 interface SummaryButtonProps {
   type: string;
   itemId: string;
@@ -58,7 +61,20 @@ export function SummaryButton({ type, itemId, data }: SummaryButtonProps) {
             </div>
           ) : (
             <div className="prose prose-invert prose-sm max-w-none">
-              <div className="whitespace-pre-wrap">{summaryData?.summary}</div>
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  h1: ({node, ...props}) => <h1 className="text-terminal-cyan font-bold text-lg mb-2" {...props} />,
+                  h2: ({node, ...props}) => <h2 className="text-terminal-cyan font-bold text-base mb-2" {...props} />,
+                  h3: ({node, ...props}) => <h3 className="text-white font-bold text-sm mb-1" {...props} />,
+                  strong: ({node, ...props}) => <strong className="text-terminal-cyan font-bold" {...props} />,
+                  ul: ({node, ...props}) => <ul className="list-disc list-inside space-y-1 mb-3 text-gray-300" {...props} />,
+                  li: ({node, ...props}) => <li className="pl-1" {...props} />,
+                  p: ({node, ...props}) => <p className="mb-3 leading-relaxed" {...props} />,
+                }}
+              >
+                {summaryData?.summary || ''}
+              </ReactMarkdown>
               <div className="mt-4 pt-2 border-t border-zinc-800 flex justify-between text-xs text-gray-500">
                 <span>Model: {summaryData?.mode === 'openai' ? 'GPT-4' : 'MicroTerm AI'}</span>
                 <span>Generated: {new Date().toLocaleTimeString()}</span>

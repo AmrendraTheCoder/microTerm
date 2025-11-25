@@ -83,10 +83,10 @@ export default function Home() {
           {/* Right: Actions & Wallet */}
           <div className="flex items-center gap-2 md:gap-3">
             {/* Command Bar Trigger - Desktop */}
-            <CommandButton 
+            {/* <CommandButton 
               onClick={() => setCommandBarOpen(true)}
               className="hidden lg:flex"
-            />
+            /> */}
             
             {/* Agent Status - Desktop */}
             <button
