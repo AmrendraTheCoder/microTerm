@@ -12,12 +12,35 @@ import { TokenGateBanner } from "@/components/token-gate-banner";
 import { NFTGallery } from "@/components/nft-gallery";
 import { ShareButton } from "@/components/share-button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FileText, Activity, Zap, TrendingUp, Newspaper } from "lucide-react";
+import { FileText, Activity, Zap, TrendingUp, Newspaper, Home as HomeIcon, Briefcase, Layers, BarChart3, Scale } from "lucide-react";
 import { useDeals, useAlerts, useNews, WhaleAlert } from "@/lib/hooks/use-data";
 
 type NewsCategory = "all" | "deals" | "defi" | "markets" | "regulation";
 
+// Generate deterministic gradient based on title and sentiment
+function getNewsImageGradient(title: string, sentiment?: string) {
+  const hash = title.split('').reduce((acc, char) => {
+    return char.charCodeAt(0) + ((acc << 5) - acc);
+  }, 0);
+  
+  const hue1 = Math.abs(hash % 360);
+  const hue2 = (hue1 + 60) % 360;
+  
+  // Adjust colors based on sentiment
+  let saturation = 70;
+  let lightness = 45;
+  
+  if (sentiment === 'Bullish') {
+    return `linear-gradient(135deg, hsl(140, ${saturation}%, ${lightness}%), hsl(170, ${saturation}%, ${lightness - 10}%))`;
+  } else if (sentiment === 'Bearish') {
+    return `linear-gradient(135deg, hsl(0, ${saturation}%, ${lightness}%), hsl(20, ${saturation}%, ${lightness - 10}%))`;
+  }
+  
+  return `linear-gradient(135deg, hsl(${hue1}, ${saturation}%, ${lightness}%), hsl(${hue2}, ${saturation}%, ${lightness - 10}%))`;
+}
+
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
   const [commandBarOpen, setCommandBarOpen] = useState(false);
   const [agentMonitorOpen, setAgentMonitorOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<NewsCategory>("all");
@@ -39,12 +62,17 @@ export default function Home() {
   const remainingNews = newsItems.slice(1);
 
   const categories = [
-    { id: "all" as NewsCategory, label: "Home", icon: "🏠" },
-    { id: "deals" as NewsCategory, label: "Deal Flow", icon: "💼" },
-    { id: "defi" as NewsCategory, label: "DeFi", icon: "🔷" },
-    { id: "markets" as NewsCategory, label: "Markets", icon: "📈" },
-    { id: "regulation" as NewsCategory, label: "Regulation", icon: "⚖️" },
+    { id: "all" as NewsCategory, label: "Home", icon: HomeIcon },
+    { id: "deals" as NewsCategory, label: "Deal Flow", icon: Briefcase },
+    { id: "defi" as NewsCategory, label: "DeFi", icon: Layers },
+    { id: "markets" as NewsCategory, label: "Markets", icon: BarChart3 },
+    { id: "regulation" as NewsCategory, label: "Regulation", icon: Scale },
   ];
+
+  // Handle client-side mounting
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Handle Cmd+K shortcut - Fixed window error
   useEffect(() => {
@@ -175,11 +203,11 @@ export default function Home() {
                 </p>
               </div>
               <span className="text-sm text-slate-400 whitespace-nowrap mt-1">
-                {new Date().toLocaleDateString(undefined, {
+                {mounted ? new Date().toLocaleDateString('en-US', {
                   weekday: 'long',
                   day: 'numeric',
                   month: 'short',
-                })}
+                }) : 'Loading...'}
               </span>
             </div>
 
@@ -523,7 +551,6 @@ export default function Home() {
         <div className="lg:col-span-5 space-y-8">
           {/* Agent Card - Always show */}
           {activeCategory === 'all' && (
-          <div className="web3-card p-6 relative overflow-hidden group">
           <div className="web3-card p-6 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/20 transition-all duration-500" />
 
