@@ -52,37 +52,65 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col pb-20 selection:bg-blue-500/20">
-      {/* Modern Glass Header - Mobile Optimized */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-[#030305]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
-        <div className="flex items-center justify-between max-w-7xl mx-auto w-full h-14 md:h-16 px-4 md:px-6">
-          <div className="flex items-center gap-2 md:gap-3">
-            <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
-              <span className="font-bold text-white text-xs md:text-sm">µ</span>
+      {/* Premium Glass Header - Enhanced */}
+      <header className="fixed top-0 left-0 right-0 z-40 bg-[#030305]/90 backdrop-blur-2xl border-b border-white/5 transition-all duration-300">
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-violet-600/5 to-purple-600/5 pointer-events-none" />
+        
+        <div className="relative flex items-center justify-between max-w-7xl mx-auto w-full h-16 md:h-18 px-4 md:px-6">
+          {/* Left: Logo & Branding */}
+          <div className="flex items-center gap-3 md:gap-4">
+            {/* Animated Logo */}
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-violet-600 rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity" />
+              <div className="relative w-9 h-9 md:w-10 md:h-10 rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
+                <span className="font-bold text-white text-sm md:text-base">µ</span>
+              </div>
             </div>
-            <h1 className="text-base md:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 tracking-tight">
-              MicroTerm
-            </h1>
-            <span className="hidden sm:inline-block text-[10px] font-medium text-slate-500 bg-white/5 px-2 py-0.5 rounded-full border border-white/5">
-              BETA
-            </span>
+            
+            {/* Brand Name */}
+            <div className="flex items-center gap-2">
+              <h1 className="text-lg md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-violet-200 tracking-tight">
+                MicroTerm
+              </h1>
+              <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold text-blue-400 bg-blue-500/10 px-2 py-1 rounded-full border border-blue-500/20">
+                <span className="w-1 h-1 rounded-full bg-blue-400 animate-pulse" />
+                BETA
+              </span>
+            </div>
           </div>
           
-          <div className="flex items-center gap-2 md:gap-4">
+          {/* Right: Actions & Wallet */}
+          <div className="flex items-center gap-2 md:gap-3">
+            {/* Command Bar Trigger - Desktop */}
+            <CommandButton 
+              onClick={() => setCommandBarOpen(true)}
+              className="hidden lg:flex"
+            />
+            
+            {/* Agent Status - Desktop */}
             <button
               onClick={() => setAgentMonitorOpen(true)}
-              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 text-xs font-medium text-slate-300 transition-all duration-200 hover:text-white"
+              className="hidden md:flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 hover:from-green-500/20 hover:to-emerald-500/20 border border-green-500/20 hover:border-green-500/40 text-xs font-medium text-green-400 transition-all duration-200 hover:scale-105 active:scale-95 group"
             >
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-lg shadow-green-500/50" />
-              Agent Active
+              <div className="relative">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-lg shadow-green-500/50" />
+                <div className="absolute inset-0 w-1.5 h-1.5 rounded-full bg-green-500 animate-ping opacity-75" />
+              </div>
+              <span className="group-hover:text-green-300 transition-colors">Agent Active</span>
             </button>
-            <div className="h-6 w-[1px] bg-white/10 hidden md:block" />
+            
+            {/* Divider */}
+            <div className="h-8 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent hidden md:block" />
+            
+            {/* Wallet Connect */}
             <WalletConnect />
           </div>
         </div>
       </header>
 
       {/* Spacer for fixed header */}
-      <div className="h-14 md:h-16" />
+      <div className="h-16 md:h-18" />
 
       {/* Ticker Tape - Modern Style */}
       <div className="border-b border-white/5 bg-[#05050A]/50">
